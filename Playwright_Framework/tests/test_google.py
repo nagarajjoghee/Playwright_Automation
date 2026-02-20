@@ -1,0 +1,20 @@
+from playwright.sync_api import expect
+import re
+
+import pytest
+
+
+@pytest.mark.parametrize(
+        
+)
+def test_google_search(page):
+    page.wait_for_timeout(3000)
+    try:
+        page.get_by_role("button", name="Accept all").click(timeout=5000)
+    except:
+        print("No popup to accept")
+
+    page.get_by_role("combobox", name="Search").fill("Playwright Python")
+    page.keyboard.press("Enter")
+
+    expect(page).to_have_title(re.compile("Playwright", re.IGNORECASE))
